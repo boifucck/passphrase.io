@@ -1,0 +1,98 @@
+html {
+	height: 100%;
+	width: 100%;
+	background-color: #FDFDFD;
+}
+body {
+	font-family: 'Maven Pro', sans-serif;
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+}
+
+#header {
+	height: 40px;
+	background: #4B9EFF;
+	padding-left: 8px;
+}
+
+#title {
+	width: 800px;
+	line-height: 40px;
+	font-size: 20px;
+	color: white;
+	margin: 0 auto;
+
+}
+
+#main {
+	width: 800px;
+	margin: 0 auto;
+	padding: 16px 8px 0 8px;
+	height: 60%; /*fallback*/
+	height: calc(100% - 56px);
+}
+
+.textarea {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 16px;
+	border: 1px solid #575757;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    border-radius: 4px;
+}
+
+#phrase {
+	
+	float: left;
+	margin-bottom: 12px;
+	overflow:auto;
+	width: calc(100% - 96px);
+}
+
+#phrasetext {
+	height: 40px;
+	padding: 4px 8px;
+	width: 100%;
+}
+
+#notepad {
+	width: 800px;
+	height: 480px;
+	height: calc(100% - 48px);
+}
+
+#notepadtext {
+	width: 100%;
+	padding: 4px 8px;
+	float: left;
+	height: 90%; /*fallback*/
+	height: calc(100% - 48px);
+}
+
+#save {
+	float: right;
+	height: 40px;
+	width: 88px;
+	padding: 0;
+	background: white;
+	-webkit-appearance: none;
+}
+
+#copyright {
+	font-size: 16px;
+	color: #575757;
+	line-height: 32px;
+	float: right;
+}
+
+@media screen and (max-width: 800px) {
+
+    #main {width: auto;}
+    #notepad {width: 100%;}
+    #title {width: 100%;}
+    #footer-container {width: 100%;}
+}

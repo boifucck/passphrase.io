@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>passphrase.io - zero knowledge privacy notepad</title>
+	<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+	<meta name="description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
+	<meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:url" content="http://passphrase.io">
+	<meta name="twitter:title" content="passphrase.io - zero knowledge notepad">
+	<meta name="twitter:description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server.">
+	<meta name="twitter:image" content="http://passphrase.io/images/social.png">
+
+	<meta property="og:title" content="passphrase.io - zero knowledge notepad"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="http://passphrase.io"/>
+	<meta property="og:description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
+	<meta property="og:image" content="http://passphrase.io/images/facebook.png"/>
+
+	<link href='//fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet' href='style.css'/>
+
+	<script src="js/jquery-2.1.0.min.js"></script>
+	<script src='js/script.js'></script>
+	<script src='js/sha256.js'></script>
+	<script src='js/aes.js'></script>
+</head>
+<body>
+	<div id="header">
+		<div id="title">
+			passphrase.io
+		</div>
+	</div>	
+	<div id="main">
+		<form id="phrase">
+			<input id="phrasetext" class="textarea" type="text" placeholder="enter a passphrase">
+		</form>
+
+		<form id="notepad">
+			<input id="save" class="textarea" type="submit" value="save">
+			<textarea id="notepadtext" class="textarea" spellcheck='false'></textarea>
+		</form>
+		<div id="copyright">
+			passphrase.io &copy 2016
+		</div>
+	</div>
+</body>
+</html>
