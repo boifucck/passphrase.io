@@ -2,14 +2,6 @@
 // Licensed under the MIT license
 
 (function($){
-	function hex2a(hexx) {
-	    var hex = hexx.toString();
-	    var str = '';
-	    for (var i = 0; i < hex.length; i += 2)
-	        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-	    return str;
-	}
-
 	function getText() {
 		var passphrase = $('#phrasetext').val();
 		passphrase = passphrase.toString();
@@ -38,7 +30,8 @@
 				else {
 					var decrypted = CryptoJS.AES.decrypt(data, passphrase);
 					decrypted = decrypted.toString();
-					decrypted = hex2a(decrypted);
+					console.log(decrypted);
+					var decrypted = decodeURIComponent(decrypted.replace(/\s+/g, '').replace(/[0-9a-f]{2}/g, '%$&'));
 					$('#notepadtext').val(decrypted);
 				}
 				$('#save').val('save');
