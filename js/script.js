@@ -58,7 +58,7 @@
 
 			timer = setTimeout(function() {
 				getText();	
-			}, 200);
+			}, 500);
 		});
 
 		$("#notepad").submit(function(event){
