@@ -28,10 +28,7 @@
 					$('#notepadtext').val('');
 				}
 				else {
-					var decrypted = CryptoJS.AES.decrypt(data, passphrase);
-					decrypted = decrypted.toString();
-					console.log(decrypted);
-					var decrypted = decodeURIComponent(decrypted.replace(/\s+/g, '').replace(/[0-9a-f]{2}/g, '%$&'));
+					var decrypted = CryptoJS.AES.decrypt(data,passphrase).toString(CryptoJS.enc.Utf8);
 					$('#notepadtext').val(decrypted);
 				}
 				$('#save').val('save');
