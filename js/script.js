@@ -62,6 +62,7 @@
 			event.preventDefault();	
 
 			var passphrase = $('#phrasetext').val();
+			passphrase = passphrase.substring(0,10000);
 
 			if (passphrase != "") {
 
