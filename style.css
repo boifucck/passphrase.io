@@ -1,3 +1,8 @@
+/* 
+Copyright (c) 2016 Daniel Routman - passphrase.io
+Licensed under the MIT license
+*/
+
 html {
 	height: 100%;
 	width: 100%;
@@ -24,7 +29,6 @@ body {
 	font-size: 20px;
 	color: white;
 	margin: 0 auto;
-
 }
 
 #main {
@@ -46,7 +50,6 @@ body {
 }
 
 #phrase {
-	
 	float: left;
 	margin-bottom: 12px;
 	overflow:auto;
@@ -62,7 +65,7 @@ body {
 #notepad {
 	width: 800px;
 	height: 480px;
-	height: calc(100% - 48px);
+	height: calc(100% - 16px);
 }
 
 #notepadtext {
@@ -82,15 +85,7 @@ body {
 	-webkit-appearance: none;
 }
 
-#copyright {
-	font-size: 16px;
-	color: #575757;
-	line-height: 32px;
-	float: right;
-}
-
 @media screen and (max-width: 800px) {
-
     #main {width: auto;}
     #notepad {width: 100%;}
     #title {width: 100%;}
