@@ -23,7 +23,7 @@ Licensed under the MIT license
 	<meta property="og:url" content="http://passphrase.io"/>
 	<meta property="og:description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
 	<meta property="og:image" content="http://passphrase.io/images/facebook.png"/>
-
+	
 	<link href='//fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 	<link rel='stylesheet' href='style.css'/>
@@ -35,11 +35,14 @@ Licensed under the MIT license
 </head>
 <body>
 	<div id="header">
-		<div id="title">passphrase.io</div>
+		<div id="header-inner">
+			<div id="title">passphrase.io</div>
+			<div id="hide">[hide passphrase]</div>
+		</div>
 	</div>	
 	<div id="main">
 		<form id="phrase">
-			<input id="phrasetext" class="textarea" type="text" placeholder="enter a passphrase">
+			<input id="phrasetext" class="textarea" type="text" placeholder="enter a passphrase" autocapitalize="none">
 		</form>
 		<form id="notepad">
 			<input id="save" class="textarea" type="submit" value="save">
