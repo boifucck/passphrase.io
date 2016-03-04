@@ -42,6 +42,18 @@
 	$(document).ready(function(){
 		var timer = null;
 
+		$("#hide").click(function(){
+			if ($('#phrasetext').attr('type') == 'text') {
+				$('#hide').html('[show passphrase]');
+				$('#phrasetext').attr('type', 'password');
+			}
+			else {
+				$('#hide').html('[hide passphrase]');
+				$('#phrasetext').attr('type', 'text');
+			}
+
+		});
+
 		$("#phrase").submit(function(event){
 			event.preventDefault();
 			$('#phrasetext').blur();
