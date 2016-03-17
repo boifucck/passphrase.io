@@ -35,6 +35,15 @@ body {
 	float: left;
 }
 
+#title a {
+	text-decoration: none;
+	color: white;
+}
+
+#title a:visited {
+	color: white;
+}
+
 #hide {
 	line-height: 40px;
 	font-size: 14px;
