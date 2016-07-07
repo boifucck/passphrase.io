@@ -2,119 +2,145 @@
 // Licensed under the MIT license
 
 (function($){
+	//scrypt parameters
+	var logN = 18;
+	var r = 8;
+	var L = 32;
+	var step = 2048;  //iterations per step
+	var salt = "passphrase.io";
+	var hash;
+
+	function pad(s, size) {
+		while(s.length < size) s = "0" + s;
+		return s;
+	}
+
 	function getText() {
-		var passphrase = $('#phrasetext').val();
+		$('#button').html('loading');
+		$('#button').css('color','#AAAAAA');
+		var passphrase = $('#passphrase').val();
 		passphrase = passphrase.toString();
 
-		//home page
-		if (passphrase == "") {
-			$('#save').css('color','#AAAAAA');
-		}
-		else {
-			$('#save').css('color','#000000');
-		}
-
-		//run sha256 hash on passphrase
-		var hash = CryptoJS.SHA256(passphrase);
-		hash = hash.toString();
-
-		//send data to server
-		$.ajax({
-			url: 'gettext.php',
-			type: 'post',
-			data: {'hash': hash},
-			success: function(data) {
-				if (data == "") {
-					$('#notepadtext').val('');
-				}
-				else {
-					var decrypted = CryptoJS.AES.decrypt(data,passphrase).toString(CryptoJS.enc.Utf8);
-					$('#notepadtext').val(decrypted);
-				}
-				$('#save').val('save');
+		scrypt(passphrase, salt, logN, r, L, step,
+      		function(progress) {
+                $('#progressbar').width(progress +'%');
+            },
+            function(result) {
+            	$('#progressbar').width('100%');
+	   			hash = CryptoJS.SHA256(result);
+				hash = hash.toString();
+				hash = pad(hash, 64);
+				$.ajax({
+					url: 'gettext.php',
+					type: 'post',
+					data: {'hash': hash},
+					success: function(data) {
+						if (data == "") {
+							$('#notepad').val('');
+						}
+						else {
+							var decrypted = CryptoJS.AES.decrypt(data,passphrase).toString(CryptoJS.enc.Utf8);
+							$('#notepad').val(decrypted);
+						}
+						$('#button').html('loaded');
+						$('#notepad').css('color','#000000');
+						$("#notepad").prop("readonly", false);
+					},
+					error: function () {
+						$('#button').html('error');
+					}
+				});
 			},
-			error: function () {
-				$('#save').val('error');
-			}
-		});
+        "hex");
+	}
+
+	function saveText() {
+		var passphrase = $('#passphrase').val();
+		passphrase = passphrase.toString();
+
+		if (passphrase != "") {
+			var rawtext = $('#notepad').val();
+			rawtext = rawtext.toString();
+			var encrypted = CryptoJS.AES.encrypt(rawtext, passphrase);
+			encrypted = encrypted.toString();
+			$('#button').html('saving');
+			$.ajax({
+				url: 'savetext.php',
+				type: 'post',
+				data: {'hash': hash, 'text': encrypted},
+				success: function(data) {
+					console.log('save successful');
+					$('#button').html('saved');
+
+				},
+				error: function () {
+					$('#button').html('error');
+				}
+			});	
+		} 
 	}
 
 	$(document).ready(function(){
-		var timer = null;
 
-		$("#hide").click(function(){
-			if ($('#phrasetext').attr('type') == 'text') {
+		$('#hide').click(function(){
+			if ($('#passphrase').attr('type') == 'text') {
 				$('#hide').html('[show passphrase]');
-				$('#phrasetext').attr('type', 'password');
+				$('#passphrase').attr('type', 'password');
 			}
 			else {
 				$('#hide').html('[hide passphrase]');
-				$('#phrasetext').attr('type', 'text');
+				$('#passphrase').attr('type', 'text');
 			}
 
 		});
 
-		$("#phrase").submit(function(event){
-			event.preventDefault();
-			$('#phrasetext').blur();
-			getText();
+		$('#passphrase').keypress(function(e) {
+		    if(e.which == 13) { //enter
+		    	var passphrase = $('#passphrase').val();
+				passphrase = passphrase.toString();
+				if (passphrase != "") {
+		        	$('#passphrase').blur();
+		        	$('#notepad').val('loading...');
+		        	getText();
+		        }
+		    }
+		});
 
+		$('#passphrase').keyup(function(){
+			var passphrase = $('#passphrase').val();
+			passphrase = passphrase.toString();
+			$('#button').html('load');
+			if (passphrase == "") {
+				$('#button').css('color','#AAAAAA');
+			}
+			else {
+				$('#button').css('color','#000000');
+			}
+			$('#notepad').val('hit enter to load');
+			$('#notepad').css('color','#AAAAAA');
+			$("#notepad").prop("readonly", true);
+		});
+
+		$('#notepad').keyup(function(){
+			var label = $('#button').html();
+			if (label == 'loaded' || label == 'saved') {
+				$('#button').html('save');
+				$('#button').css('color','#000000');
+			}
+		});
+
+		$('#button').click(function(){
+			var passphrase = $('#passphrase').val();
+			passphrase = passphrase.toString();
+			var label = $('#button').html();
+			label = label.toString();
+			if (label == "load" && passphrase != "") {
+				getText();
+			}
+			if (label == "save") {
+				saveText();
+			}
 		});	
-		$("#phrase").keyup(function(){
-			clearTimeout(timer);
-			$('#save').val('loading...');
-			var target = $(this);
 
-			timer = setTimeout(function() {
-				getText();	
-			}, 500);
-		});
-
-		$("#notepad").submit(function(event){
-			event.preventDefault();	
-
-			var passphrase = $('#phrasetext').val();
-			passphrase = passphrase.substring(0,10000);
-
-			if (passphrase != "") {
-
-				//get text
-				var rawtext = $('#notepadtext').val();
-				rawtext = rawtext.toString();
-
-				//encrypt the text
-				var encrypted = CryptoJS.AES.encrypt(rawtext, passphrase);
-				encrypted = encrypted.toString();
-
-				$('#save').val('saving...');
-
-				//run sha256 hash on passphrase
-				var hash = CryptoJS.SHA256(passphrase);
-				hash = hash.toString();
-
-				//send data to server
-				$.ajax({
-					url: 'savetext.php',
-					type: 'post',
-					data: {'hash': hash, 'text': encrypted},
-					success: function(data) {
-						console.log('save successful');
-						$('#save').val('saved');
-
-					},
-					error: function () {
-						$('#save').val('error');
-					}
-				});	
-			} 
-
-		});
-
-		$("#notepad").keyup(function(){
-			$('#save').val('save');
-		});
-
-		//initialize: show text for blank passphrase
-		getText();
 	});
 })(jQuery);
