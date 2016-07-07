@@ -70,40 +70,38 @@ body {
     border-radius: 4px;
 }
 
-#phrase {
+#passphrase {
 	float: left;
 	margin-bottom: 12px;
 	overflow:auto;
 	width: calc(100% - 96px);
-}
-
-#phrasetext {
 	height: 40px;
 	padding: 4px 8px;
-	width: 100%;
 }
 
-#notepad {
-	width: 800px;
-	height: 480px;
-	height: calc(100% - 16px);
-}
-
-#notepadtext {
-	width: 100%;
-	padding: 4px 8px;
-	float: left;
-	height: 90%; /*fallback*/
-	height: calc(100% - 48px);
-}
-
-#save {
+#button {
 	float: right;
 	height: 40px;
 	width: 88px;
 	padding: 0;
 	background: white;
-	-webkit-appearance: none;
+	line-height: 40px;
+    text-align: center;
+    color: #AAAAAA;
+    cursor: pointer;
+}
+
+#progressbar {
+	height: 12px;
+	margin-top: 4px;
+	background: #4B9EFF;
+	width: 0%;
+}
+
+#notepad {
+	width: 800px;
+	height: calc(100% - 80px);
+	padding: 4px 8px;
 }
 
 @media screen and (max-width: 800px) {
