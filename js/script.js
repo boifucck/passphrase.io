@@ -46,7 +46,7 @@
 						$('#notepad').css('color','#000000');
 						$("#notepad").prop("readonly", false);
 					},
-					error: function () {
+					error: function () {       
 						$('#button').html('error');
 					}
 				});
@@ -73,7 +73,7 @@
 					$('#button').html('saved');
 
 				},
-				error: function () {
+				error: function () {       
 					$('#button').html('error');
 				}
 			});	
@@ -98,7 +98,8 @@
 		    if(e.which == 13) { //enter
 		    	var passphrase = $('#passphrase').val();
 				passphrase = passphrase.toString();
-				if (passphrase != "") {
+				var label = $('#button').html();
+				if (passphrase != "" && label != "loading") {
 		        	$('#passphrase').blur();
 		        	$('#notepad').val('loading...');
 		        	getText();
@@ -109,7 +110,10 @@
 		$('#passphrase').keyup(function(){
 			var passphrase = $('#passphrase').val();
 			passphrase = passphrase.toString();
-			$('#button').html('load');
+			var label = $('#button').html();
+			if (label != "loading") {
+				$('#button').html('load');
+			}
 			if (passphrase == "") {
 				$('#button').css('color','#AAAAAA');
 			}
@@ -123,7 +127,7 @@
 
 		$('#notepad').keyup(function(){
 			var label = $('#button').html();
-			if (label == 'loaded' || label == 'saved') {
+			if (label == 'loaded' || label == 'saved' || label == 'error') {
 				$('#button').html('save');
 				$('#button').css('color','#000000');
 			}
