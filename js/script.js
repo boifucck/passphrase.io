@@ -61,6 +61,7 @@
 		if (passphrase != "") {
 			var rawtext = $('#notepad').val();
 			rawtext = rawtext.toString();
+			rawtext = rawtext.substring(0,10000);
 			var encrypted = CryptoJS.AES.encrypt(rawtext, passphrase);
 			encrypted = encrypted.toString();
 			$('#button').html('saving');
