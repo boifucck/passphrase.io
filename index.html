@@ -188,7 +188,7 @@ Licensed under the MIT license
 			<div><b><span style="color: rgb(230, 0, 0); background-color: inherit;">Note:</span></b> This is an updated version of passphrase.io with improved security. &nbsp;If you used passphrase.io prior to July 2016, please visit <a href="https://passphrase.io/old" target="_blank">https://passphrase.io/old</a> to recover your notepad.</div>
 			<div><br></div>
 			<div><b>Technical Details:</b></div>
-			<div>Using client-side JavaScript, your notepad is encrypted with AES256 encryption, using your passphrase as the key. &nbsp;Your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2^18, r=8, p=1, dkLen=32), followed by a SHA256 hash. The hash and encrypted notepad is then sent to our server for storage. &nbsp;We have no way of knowing your passphrase or decrypting your notepad.</div>
+			<div>Using client-side JavaScript, your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2^18, r=8, p=1, dkLen=32). &nbsp;Your notepad is then encrypted with AES256 encryption, using the scrypt result as the key. &nbsp;When you click save, your encrypted notepad is sent along with a SHA256 hash of the scrypt key to our server for storage. &nbsp;We have no way of knowing your passphrase or decrypting your notepad.</div>
 			<div><br></div>
 			<div><b>Terms of Service:</b></div>
 			<div>By using passphrase.io ("Service"), you are agreeing to the following terms and conditions:</div>
