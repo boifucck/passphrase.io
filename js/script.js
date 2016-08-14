@@ -8,6 +8,7 @@
 	var L = 32;
 	var step = 2048;  //iterations per step
 	var salt = "passphrase.io";
+	var scryptkey;
 	var hash;
 
 	$(document).ready(function(){
@@ -29,6 +30,7 @@
 	            },
 	            function(result) {
 	            	$('#progressbar').width('0');
+	            	scryptkey = result;
 		   			hash = CryptoJS.SHA256(result);
 					hash = hash.toString();
 					hash = pad(hash, 64);
@@ -36,19 +38,27 @@
 						url: 'gettext.php',
 						type: 'post',
 						data: {'hash': hash},
+						dataType: 'json',
 						success: function(data) {
-							if (data == "") {
+							if (data['text'] == null) {
 								quill.setHTML('');
 							}
 							else {
-								var decrypted = CryptoJS.AES.decrypt(data,passphrase).toString(CryptoJS.enc.Utf8);
-								quill.setHTML(decrypted.replace(/\n/g, "<br />"));
+								var version = data['version'];
+								if (version == 0) { //decrypt using passphrase
+									var decrypted = CryptoJS.AES.decrypt(data['text'],passphrase).toString(CryptoJS.enc.Utf8);
+									quill.setHTML(decrypted.replace(/\n/g, "<br />"));
+								}
+								if (version == 1) { //decrypt using scrypt key
+									var decrypted = CryptoJS.AES.decrypt(data['text'],scryptkey).toString(CryptoJS.enc.Utf8);
+									quill.setHTML(decrypted);
+								}
 							}
 							$('#button').html('loaded');
 							$('#notepad').css('color','#000000');
 							quill.editor.enable();
 						},
-						error: function () {       
+						error: function (data) {       
 							$('#button').html('error');
 						}
 					});
@@ -57,32 +67,23 @@
 		}
 
 		function saveText() {
-			var passphrase = $('#passphrase').val();
-			passphrase = passphrase.toString();
+			var rawtext = quill.getHTML();
+			rawtext = rawtext.substring(0,32768);
+			var encrypted = CryptoJS.AES.encrypt(rawtext, scryptkey);
+			encrypted = encrypted.toString();
+			$('#button').html('saving');
+			$.ajax({
+				url: 'savetext.php',
+				type: 'post',
+				data: {'hash': hash, 'text': encrypted, 'version': 1},
+				success: function(data) {
+					$('#button').html('saved');
 
-			if (passphrase != "") {
-				var rawtext = quill.getHTML();
-
-				rawtext = rawtext.substring(0,32768);
-
-				var encrypted = CryptoJS.AES.encrypt(rawtext, passphrase);
-				encrypted = encrypted.toString();
-
-				$('#button').html('saving');
-				$.ajax({
-					url: 'savetext.php',
-					type: 'post',
-					data: {'hash': hash, 'text': encrypted},
-					success: function(data) {
-						console.log('save successful');
-						$('#button').html('saved');
-
-					},
-					error: function () {       
-						$('#button').html('error');
-					}
-				});	
-			} 
+				},
+				error: function () {       
+					$('#button').html('error');
+				}
+			});	
 		}
 
 		var quill = new Quill('#notepad', {
