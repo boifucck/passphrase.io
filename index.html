@@ -24,8 +24,6 @@ Licensed under the MIT license
 	<meta property="og:description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
 	<meta property="og:image" content="http://passphrase.io/images/facebook.png"/>
 	
-	<link href='//fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
-	<link href='//fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 	<link rel='stylesheet' href='quill.snow.css'/>
 	<link rel='stylesheet' href='style.css'/>
 
@@ -175,32 +173,45 @@ Licensed under the MIT license
 		</div>
 
 		<div id="notepad">
-			<img src="https://passphrase.io/favicon.png">
-			<div><span style="font-size: 24px;"><b>passphrase.io</b></span></div>
-			<div><b>zero knowledge privacy online notepad</b></div>
-			<div><br></div>
-			<div>Enter a passphrase and hit enter to load the notepad associated with that passphrase. Click save to encrypt and store your notepad. &nbsp;Access your notepad again by entering your passphrase.</div>
-			<div><br></div>
-			<div>Your passphrase and notepad are encrypted in your browser, and plaintext data is never sent to or stored on the server. &nbsp;If you forget your passphrase, there is no recovery process. &nbsp;Your passphrase is case sensitive.</div>
-			<div><br></div>
-			<div>For high security, use a long passphrase that is difficult to guess and never used in any song, literature, or media. &nbsp;Short phrases lead to high visibility, and text can be overwritten by anyone who stumbles upon it.  Click "random" to have a secure 8-word passphrase generated for you.</div>
-			<div><br></div>
-			<div><b><span style="color: rgb(230, 0, 0); background-color: inherit;">Note:</span></b> This is an updated version of passphrase.io with improved security. &nbsp;If you used passphrase.io prior to July 2016, please visit <a href="https://passphrase.io/old" target="_blank">https://passphrase.io/old</a> to recover your notepad.</div>
-			<div><br></div>
+			
+			<img id="notepad-logo" src="images/logo.png" height="50" width="50">
+			<div id="notepad-title">passphrase.io</div>
+			<div id="notepad-subsitle">zero knowledge privacy online notepad</div>
+			<br>
+			<div>Enter any passphrase to load the notepad associated with that passphrase. Click save to encrypt and store your notepad. Access your notepad again by entering your passphrase.</div>
+			<br>
+			<div>Your passphrase and notepad are encrypted in your browser, and plaintext data is never sent to or stored on the server. If you forget your passphrase, there is no recovery process.</div>
+			<br>
+			<div>For high security, use a long passphrase that is difficult to guess and never used in any song, literature, or media. Short phrases lead to high visibility, and text can be seen and overwritten by anyone who stumbles upon it.  Click "random" to have a secure 8-word passphrase generated for you. Please keep in mind that your passphrase is case sensitive.</div>
+			<br>
+			<div><b><span style="color: rgb(230, 0, 0); background-color: inherit;">Note:</span></b> This is an updated version of passphrase.io with improved security. If you used passphrase.io prior to July 2016, please visit <a href="https://passphrase.io/old" target="_blank">https://passphrase.io/old</a> to recover your notepad.</div>
+			<br>
 			<div><b>Technical Details:</b></div>
-			<div>Using client-side JavaScript, your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2^18, r=8, p=1, dkLen=32). &nbsp;Your notepad is then encrypted with AES256 encryption, using the scrypt result as the key. &nbsp;When you click save, your encrypted notepad is sent along with a SHA256 hash of the scrypt key to our server for storage. &nbsp;We have no way of knowing your passphrase or decrypting your notepad.</div>
-			<div><br></div>
+			<div>Using client-side JavaScript, your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2^18, r=8, p=1, dkLen=32) to generate a secret key. Your secret key is used to encrypt your notepad with <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES256</a> encryption. Your encrypted notepad is sent along with a <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA256</a> hash of your secret key to the server for storage. We have no way of knowing your passphrase or decrypting your notepad.</div>
+			<br>
+			<div>When you retrieve your notepad, your SHA256 hash is sent to the server, and the encrypted notepad is returned.  The notepad is decrypted using your secret key, revealing your notepad.</div>
+			<br>
+			<div style="text-align: center;"><img src="images/encryption-lr.png" srcset="images/encryption.png 2x"></div>
+			<br>
 			<div><b>Terms of Service:</b></div>
 			<div>By using passphrase.io ("Service"), you are agreeing to the following terms and conditions:</div>
-			<ul><li>Our Service displays content generated by other users when the passphrase can be guessed. &nbsp;This content is the sole responsibility of the entity that makes it available. &nbsp;Anyone reserves the right to remove or modify any defamatory, offensive, or illegal content.</li><li>We are not liable for any information stored with the Service and loss of data resulting from weak passphrases, malicious attacks, or database failures.</li><li>We reserve the right to modify or terminate the Service for any reason, without notice at any time. &nbsp;We reserve the right to alter these Terms of Service at any time.</li></ul>
-			<div><br></div>
+			<ul>
+				<li>Our Service displays content generated by other users when the passphrase can be guessed. This content is the sole responsibility of the entity that makes it available. Anyone reserves the right to remove or modify any defamatory, offensive, or illegal content.</li>
+				<li>We are not liable for any information stored with the Service and loss of data resulting from weak passphrases, malicious attacks, or database failures.</li>
+				<li>We reserve the right to modify or terminate the Service for any reason, without notice at any time. We reserve the right to alter these Terms of Service at any time.</li>
+			</ul>
+			<br>
 			<div><b>Created By:</b></div>
 			<div>Daniel Routman</div>
 			<div><a href="mailto:routman@protonmail.com">routman@protonmail.com</a></div>
-			<div>Donate Bitcoin: 16pxFP2C4mYBrG7mufnXZVWCLhNq7Vmdjo</div>
-			<div><br></div>
+			<br>
+			<div>Donate Bitcoin:</div>
+			<div>16pxFP2C4mYBrG7mufnXZVWCLhNq7Vmdjo</div>
+			<img src="https://passphrase.io/images/donate.png">
+			<br>
 			<div><a href="https://github.com/routman/passphrase.io" target="_blank">GitHub Repository</a></div>
 			<div>Licensed under the MIT license (MIT)</div>
+			<br>
 			<div>passphrase.io © 2016</div>
 		</div>
 	</div>

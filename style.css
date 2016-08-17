@@ -3,6 +3,20 @@ Copyright (c) 2016 Daniel Routman - passphrase.io
 Licensed under the MIT license
 */
 
+@font-face {
+  font-family: 'Maven Pro';
+  font-weight: 400;
+  font-style: normal;
+  src: url('fonts/Maven-Pro-regular/Maven-Pro-regular.eot');
+  src: url('fonts/Maven-Pro-regular/Maven-Pro-regular.eot?#iefix') format('embedded-opentype'),
+       local('Maven Pro Regular'),
+       local('Maven-Pro-regular'),
+       url('fonts/Maven-Pro-regular/Maven-Pro-regular.woff2') format('woff2'),
+       url('fonts/Maven-Pro-regular/Maven-Pro-regular.woff') format('woff'),
+       url('fonts/Maven-Pro-regular/Maven-Pro-regular.ttf') format('truetype'),
+       url('fonts/Maven-Pro-regular/Maven-Pro-regular.svg#MavenPro') format('svg');
+}
+
 html {
 	height: 100%;
 	width: 100%;
@@ -134,6 +148,24 @@ body {
     border-radius: 0 0 4px 4px;
 }
 
+#notepad-logo {
+	float: left;
+}
+
+#notepad-title {
+	font-family: 'Maven Pro', sans-serif;
+	font-size: 28px;
+	line-height: 28px;
+	margin-left: 58px;
+}
+
+#notepad-subsitle {
+	font-family: 'Maven Pro', sans-serif;
+	font-size: 18px;
+	line-height: 18px;
+	margin-left: 58px;
+}
+
 #hide-mobile {
 	display: none;
 }
@@ -147,10 +179,12 @@ body {
 
 @media screen and (max-width: 632px) {
     #notepad {height: calc(100% - 116px);}
+    #notepad-subsitle {font-size: 14px;}
 }
 
 @media screen and (max-width: 371px) {
     #hide-normal {display: none;}
     #hide-mobile {display: block;}
     #notepad {height: calc(100% - 142px);}
+    #notepad-subsitle {font-size: 12px;}
 }
