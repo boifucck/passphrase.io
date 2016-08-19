@@ -27,6 +27,9 @@
 			scrypt(passphrase, salt, logN, r, L, step,
 	      		function(progress) {
 	                $('#progressbar').width(progress +'%');
+	                progress = parseFloat(progress);
+	                progress = progress.toFixed(0);
+	                quill.setHTML('generating your secret key: ' + progress + '%');
 	            },
 	            function(result) {
 	            	$('#progressbar').width('0');
@@ -60,6 +63,8 @@
 						},
 						error: function (data) {       
 							$('#button').html('error');
+							$('#button').css('color','#FF0000');
+							quill.setHTML("Error loading notepad. Please try again.");
 						}
 					});
 				},
@@ -82,6 +87,7 @@
 				},
 				error: function () {       
 					$('#button').html('error');
+					('#button').css('color','#FF0000');
 				}
 			});	
 		}
@@ -136,7 +142,6 @@
 				var label = $('#button').html();
 				if (passphrase != "" && label != "loading") {
 		        	$('#passphrase').blur();
-		        	quill.setHTML('loading...');
 		        	getText();
 		        }
 		    }
