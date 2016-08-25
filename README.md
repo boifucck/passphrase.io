@@ -1,2 +1,2 @@
 # passphrase.io
-zero knowledge privacy notepad
+zero knowledge privacy online notepad
