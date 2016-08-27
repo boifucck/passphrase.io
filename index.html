@@ -24,18 +24,10 @@ Licensed under the MIT license
 	<meta property="og:description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
 	<meta property="og:image" content="http://passphrase.io/images/facebook.png"/>
 	
-	<link rel='stylesheet' href='quill.snow.css'/>
-	<link rel='stylesheet' href='style.css'/>
+	<link rel='stylesheet' href='css/monokai-sublime.min.css'/>
+	<link rel='stylesheet' href='css/quill.snow.css'/>
+	<link rel='stylesheet' href='css/style.css'/>
 
-	<script src="js/jquery-2.1.0.min.js"></script>
-	<script src='js/sha256.js'></script>
-	<script src='js/aes.js'></script>
-	<script src='js/secure-random.js'></script>
-	<script src='js/mnemonic.js'></script>
-	<script src='js/bitcoinjs-min.js'></script>
-	<script src='js/quill.js'></script>
-	<script src='js/scrypt.js'></script>
-	<script src='js/script.js'></script>
 </head>
 <body>
 	<div id="header">
@@ -47,174 +39,70 @@ Licensed under the MIT license
 		</div>
 	</div>	
 	<div id="main">
-		<div id="passphrase-container">
-			<div id="progressbar"></div>
-			<input id="passphrase" class="textarea" type="text" placeholder="enter a passphrase" autocapitalize="none" autocomplete="off">
-		</div>
-		<div id="button" class="textarea">load</div>
+		<div id="main-inner">
+			<div id="passphrase-container">
+				<div id="progressbar"></div>
+				<input id="passphrase" class="textarea" type="text" placeholder="enter a passphrase" autocapitalize="none" autocomplete="off">
+			</div>
+			<div id="button" class="textarea">load</div>
 
-		<div id="toolbar" class="ql-snow">
-		  	<span class="ql-format-group">
-				<select title="Font" class="ql-font">
-					<option value="sans-serif" selected="">Sans Serif</option>
-					<option value="serif">Serif</option>
-					<option value="monospace">Monospace</option>
-				</select>
-				<select title="Size" class="ql-size">
-					<option value="12px">Small</option>
-					<option value="16px" selected="">Normal</option>
-					<option value="24px">Large</option>
-					<option value="36px">Huge</option>
-				</select>
-			</span>
-			<span class="ql-format-group">
-				<span title="Bold" class="ql-format-button ql-bold"></span>
-				<span class="ql-format-separator"></span>
-				<span title="Italic" class="ql-format-button ql-italic"></span>
-				<span class="ql-format-separator"></span>
-				<span title="Underline" class="ql-format-button ql-underline"></span>
-				<span class="ql-format-separator"></span>
-				<span title="Strikethrough" class="ql-format-button ql-strike"></span>
-			</span>
-			<span class="ql-format-group">
-				<select title="Text Color" class="ql-color">
-					<option value="rgb(0, 0, 0)" label="rgb(0, 0, 0)" selected=""></option>
-					<option value="rgb(230, 0, 0)" label="rgb(230, 0, 0)"></option>
-					<option value="rgb(255, 153, 0)" label="rgb(255, 153, 0)"></option>
-					<option value="rgb(255, 255, 0)" label="rgb(255, 255, 0)"></option>
-					<option value="rgb(0, 138, 0)" label="rgb(0, 138, 0)"></option>
-					<option value="rgb(0, 102, 204)" label="rgb(0, 102, 204)"></option>
-					<option value="rgb(153, 51, 255)" label="rgb(153, 51, 255)"></option>
-					<option value="rgb(255, 255, 255)" label="rgb(255, 255, 255)"></option>
-					<option value="rgb(250, 204, 204)" label="rgb(250, 204, 204)"></option>
-					<option value="rgb(255, 235, 204)" label="rgb(255, 235, 204)"></option>
-					<option value="rgb(255, 255, 204)" label="rgb(255, 255, 204)"></option>
-					<option value="rgb(204, 232, 204)" label="rgb(204, 232, 204)"></option>
-					<option value="rgb(204, 224, 245)" label="rgb(204, 224, 245)"></option>
-					<option value="rgb(235, 214, 255)" label="rgb(235, 214, 255)"></option>
-					<option value="rgb(187, 187, 187)" label="rgb(187, 187, 187)"></option>
-					<option value="rgb(240, 102, 102)" label="rgb(240, 102, 102)"></option>
-					<option value="rgb(255, 194, 102)" label="rgb(255, 194, 102)"></option>
-					<option value="rgb(255, 255, 102)" label="rgb(255, 255, 102)"></option>
-					<option value="rgb(102, 185, 102)" label="rgb(102, 185, 102)"></option>
-					<option value="rgb(102, 163, 224)" label="rgb(102, 163, 224)"></option>
-					<option value="rgb(194, 133, 255)" label="rgb(194, 133, 255)"></option>
-					<option value="rgb(136, 136, 136)" label="rgb(136, 136, 136)"></option>
-					<option value="rgb(161, 0, 0)" label="rgb(161, 0, 0)"></option>
-					<option value="rgb(178, 107, 0)" label="rgb(178, 107, 0)"></option>
-					<option value="rgb(178, 178, 0)" label="rgb(178, 178, 0)"></option>
-					<option value="rgb(0, 97, 0)" label="rgb(0, 97, 0)"></option>
-					<option value="rgb(0, 71, 178)" label="rgb(0, 71, 178)"></option>
-					<option value="rgb(107, 36, 178)" label="rgb(107, 36, 178)"></option>
-					<option value="rgb(68, 68, 68)" label="rgb(68, 68, 68)"></option>
-					<option value="rgb(92, 0, 0)" label="rgb(92, 0, 0)"></option>
-					<option value="rgb(102, 61, 0)" label="rgb(102, 61, 0)"></option>
-					<option value="rgb(102, 102, 0)" label="rgb(102, 102, 0)"></option>
-					<option value="rgb(0, 55, 0)" label="rgb(0, 55, 0)"></option>
-					<option value="rgb(0, 41, 102)" label="rgb(0, 41, 102)"></option>
-					<option value="rgb(61, 20, 102)" label="rgb(61, 20, 102)"></option>
-				</select>
-				<span class="ql-format-separator"></span>
-					<select title="Background Color" class="ql-background">
-					<option value="rgb(0, 0, 0)" label="rgb(0, 0, 0)"></option>
-					<option value="rgb(230, 0, 0)" label="rgb(230, 0, 0)"></option>
-					<option value="rgb(255, 153, 0)" label="rgb(255, 153, 0)"></option>
-					<option value="rgb(255, 255, 0)" label="rgb(255, 255, 0)"></option>
-					<option value="rgb(0, 138, 0)" label="rgb(0, 138, 0)"></option>
-					<option value="rgb(0, 102, 204)" label="rgb(0, 102, 204)"></option>
-					<option value="rgb(153, 51, 255)" label="rgb(153, 51, 255)"></option>
-					<option value="rgb(255, 255, 255)" label="rgb(255, 255, 255)" selected=""></option>
-					<option value="rgb(250, 204, 204)" label="rgb(250, 204, 204)"></option>
-					<option value="rgb(255, 235, 204)" label="rgb(255, 235, 204)"></option>
-					<option value="rgb(255, 255, 204)" label="rgb(255, 255, 204)"></option>
-					<option value="rgb(204, 232, 204)" label="rgb(204, 232, 204)"></option>
-					<option value="rgb(204, 224, 245)" label="rgb(204, 224, 245)"></option>
-					<option value="rgb(235, 214, 255)" label="rgb(235, 214, 255)"></option>
-					<option value="rgb(187, 187, 187)" label="rgb(187, 187, 187)"></option>
-					<option value="rgb(240, 102, 102)" label="rgb(240, 102, 102)"></option>
-					<option value="rgb(255, 194, 102)" label="rgb(255, 194, 102)"></option>
-					<option value="rgb(255, 255, 102)" label="rgb(255, 255, 102)"></option>
-					<option value="rgb(102, 185, 102)" label="rgb(102, 185, 102)"></option>
-					<option value="rgb(102, 163, 224)" label="rgb(102, 163, 224)"></option>
-					<option value="rgb(194, 133, 255)" label="rgb(194, 133, 255)"></option>
-					<option value="rgb(136, 136, 136)" label="rgb(136, 136, 136)"></option>
-					<option value="rgb(161, 0, 0)" label="rgb(161, 0, 0)"></option>
-					<option value="rgb(178, 107, 0)" label="rgb(178, 107, 0)"></option>
-					<option value="rgb(178, 178, 0)" label="rgb(178, 178, 0)"></option>
-					<option value="rgb(0, 97, 0)" label="rgb(0, 97, 0)"></option>
-					<option value="rgb(0, 71, 178)" label="rgb(0, 71, 178)"></option>
-					<option value="rgb(107, 36, 178)" label="rgb(107, 36, 178)"></option>
-					<option value="rgb(68, 68, 68)" label="rgb(68, 68, 68)"></option>
-					<option value="rgb(92, 0, 0)" label="rgb(92, 0, 0)"></option>
-					<option value="rgb(102, 61, 0)" label="rgb(102, 61, 0)"></option>
-					<option value="rgb(102, 102, 0)" label="rgb(102, 102, 0)"></option>
-					<option value="rgb(0, 55, 0)" label="rgb(0, 55, 0)"></option>
-					<option value="rgb(0, 41, 102)" label="rgb(0, 41, 102)"></option>
-					<option value="rgb(61, 20, 102)" label="rgb(61, 20, 102)"></option>
-				</select>
-			</span>
-			<span class="ql-format-group">
-				<span title="List" class="ql-format-button ql-list"></span>
-				<span class="ql-format-separator"></span>
-				<span title="Bullet" class="ql-format-button ql-bullet"></span>
-				<span class="ql-format-separator"></span>
-				<select title="Text Alignment" class="ql-align">
-					<option value="left" label="Left" selected=""></option>
-					<option value="center" label="Center"></option>
-					<option value="right" label="Right"></option>
-					<option value="justify" label="Justify"></option>
-				</select>
-			</span>
-			<span class="ql-format-group">
-				<span title="Link" class="ql-format-button ql-link"></span>
-				<span class="ql-format-separator"></span>
-				<span title="Image" class="ql-format-button ql-image"></span>
-			</span>
-		</div>
-
-		<div id="notepad">
+			<div id="notepad-container">
+				<div id="notepad"></div>
 			
-			<img id="notepad-logo" src="images/logo.png" height="50" width="50">
-			<div id="notepad-title">passphrase.io</div>
-			<div id="notepad-subsitle">zero knowledge privacy online notepad</div>
-			<br>
-			<div>Enter any passphrase to load the notepad associated with that passphrase. Click save to encrypt and store your notepad. Access your notepad again by entering your passphrase.</div>
-			<br>
-			<div>Your passphrase and notepad are encrypted in your browser, and plaintext data is never sent to or stored on the server. We have no way of knowing your passphrase or decrypting your notepad.</div>
-			<br>
-			<div>For high security, use a long passphrase that is difficult to guess and never used in any song, literature, or media. Short phrases lead to high visibility, and text can be overwritten by anyone who stumbles upon it.  Click "random" to have a secure 8-word passphrase generated for you. If you forget your passphrase, there is no recovery process. Please keep in mind that your passphrase is case sensitive.</div>
-			<br>
-			<div><b><span style="color: rgb(230, 0, 0); background-color: inherit;">Note:</span></b> This is an updated version of passphrase.io with improved security. If you used passphrase.io prior to July 2016, please visit <a href="https://passphrase.io/old" target="_blank">https://passphrase.io/old</a> to recover your notepad.</div>
-			<br>
-			<div><b>Technical Details:</b></div>
-			<div>Using client-side JavaScript, your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2^18, r=8, p=1, dkLen=32) to generate a secret key. Your secret key is used to encrypt your notepad with <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES256</a> encryption. The ciphertext (encrypted notepad) is sent along with a <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA256</a> hash of your secret key to the server for storage.</div>
-			<br>
-			<div>When you retrieve your notepad, your SHA256 hash is sent to the server, and the ciphertext is returned.  The ciphertext is decrypted using your secret key, revealing your notepad.</div>
-			<br>
-			<div style="text-align: center;"><img src="images/encryption-lr.png" srcset="images/encryption.png 2x"></div>
-			<br>
-			<div><b>Terms of Service:</b></div>
-			<div>By using passphrase.io ("Service"), you are agreeing to the following terms and conditions:</div>
-			<ul>
-				<li>Our Service displays content generated by other users when the passphrase can be guessed. This content is the sole responsibility of the entity that makes it available. Anyone reserves the right to remove or modify any defamatory, offensive, or illegal content.</li>
-				<li>We are not liable for any information stored with the Service or loss of data resulting from weak passphrases, malicious attacks, or database failures.</li>
-				<li>We reserve the right to modify or terminate the Service for any reason, without notice at any time. We reserve the right to alter these Terms of Service at any time.</li>
-			</ul>
-			<br>
-			<div><b>Created By:</b></div>
-			<div>Daniel Routman</div>
-			<div><a href="mailto:routman@protonmail.com">routman@protonmail.com</a></div>
-			<br>
-			<div>Donate Bitcoin:</div>
-			<div>16pxFP2C4mYBrG7mufnXZVWCLhNq7Vmdjo</div>
-			<br>
-			<img src="images/donate.png">
-			<br><br>
-			<div><a href="https://github.com/routman/passphrase.io" target="_blank">GitHub Repository</a></div>
-			<div>Licensed under the MIT license (MIT)</div>
-			<br>
-			<div>passphrase.io © 2016</div>
+				<div id="home">
+					<img id="notepad-logo" src="images/logo.png" style="max-width: 50px;">
+					<div id="notepad-title">passphrase.io</div>
+					<div id="notepad-subsitle">zero knowledge privacy online notepad</div>
+					<br>
+					<div>Enter any passphrase to load the notepad associated with that passphrase. Click save to encrypt and store your notepad. Access your notepad again by entering your passphrase.</div>
+					<br>
+					<div>Your passphrase and notepad are encrypted in your browser, and plaintext data is never sent to or stored on the server. We have no way of knowing your passphrase or decrypting your notepad.</div>
+					<br>
+					<div>For high security, use a long passphrase that is difficult to guess and never used in any song, literature, or media. Short phrases lead to high visibility, and text can be overwritten by anyone who stumbles upon it.  Click "random" to have a secure 8-word passphrase generated for you. If you forget your passphrase, there is no recovery process. Please keep in mind that your passphrase is case sensitive.</div>
+					<br>
+					<div><b><span style="color: rgb(230, 0, 0); background-color: inherit;">Note:</span></b> This is an updated version of passphrase.io with improved security. If you used passphrase.io prior to July 2016, please visit <a href="https://passphrase.io/old" target="_blank">https://passphrase.io/old</a> to recover your notepad.</div>
+					<br>
+					<div><b>Technical Details:</b></div>
+					<div>Using client-side JavaScript, your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2^18, r=8, p=1, dkLen=32) to generate a secret key. Your secret key is used to encrypt your notepad with <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES256</a> encryption. The ciphertext (encrypted notepad) is sent along with a <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA256</a> hash of your secret key to the server for storage.</div>
+					<br>
+					<div>When you retrieve your notepad, your SHA256 hash is sent to the server, and the ciphertext is returned.  The ciphertext is decrypted using your secret key, revealing your notepad.</div>
+					<br>
+					<div style="text-align: center;"><img src="images/encryption.png" style="width: 459px; max-width: 100%;"></div>
+					<br>
+					<div><b>Terms of Service:</b></div>
+					<div>By using passphrase.io ("Service"), you are agreeing to the following terms and conditions:</div>
+					<ul>
+						<li>Our Service displays content generated by other users when the passphrase can be guessed. This content is the sole responsibility of the entity that makes it available. Anyone reserves the right to remove or modify any defamatory, offensive, or illegal content.</li>
+						<li>We are not liable for any information stored with the Service or loss of data resulting from weak passphrases, malicious attacks, or database failures.</li>
+						<li>We reserve the right to modify or terminate the Service for any reason, without notice at any time. We reserve the right to alter these Terms of Service at any time.</li>
+					</ul>
+					<br>
+					<div><b>Created By:</b></div>
+					<div>Daniel Routman</div>
+					<div><a href="mailto:routman@protonmail.com">routman@protonmail.com</a></div>
+					<br>
+					<div>Donate Bitcoin:</div>
+					<div>16pxFP2C4mYBrG7mufnXZVWCLhNq7Vmdjo</div>
+					<br>
+					<img src="images/donate.png">
+					<br><br>
+					<div><a href="https://github.com/routman/passphrase.io" target="_blank">GitHub Repository</a></div>
+					<div>Licensed under the MIT license (MIT)</div>
+					<br>
+					<div>passphrase.io © 2016</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
+<script src='js/jquery-3.1.0.min.js'></script>
+<script src='js/highlight.min.js'></script>
+<script src='js/quill.js'></script>
+<script src='js/sha256.js'></script>
+<script src='js/aes.js'></script>
+<script src='js/secure-random.js'></script>
+<script src='js/mnemonic.js'></script>
+<script src='js/bitcoinjs-min.js'></script>
+<script src='js/scrypt.js'></script>
+<script src='js/script.js'></script>
 </html>
