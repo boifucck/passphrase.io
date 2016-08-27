@@ -29,9 +29,10 @@
 	                $('#progressbar').width(progress +'%');
 	                progress = parseFloat(progress);
 	                progress = progress.toFixed(0);
-	                quill.setHTML('generating your secret key: ' + progress + '%');
+	                quill.setText('generating your secret key: ' + progress + '%');
 	            },
 	            function(result) {
+	            	quill.setText('generating your secret key: 100%');
 	            	$('#progressbar').width('0');
 	            	scryptkey = result;
 		   			hash = CryptoJS.SHA256(result);
@@ -44,27 +45,32 @@
 						dataType: 'json',
 						success: function(data) {
 							if (data['text'] == null) {
-								quill.setHTML('');
+								quill.setText('');
 							}
 							else {
 								var version = data['version'];
 								if (version == 0) { //decrypt using passphrase
 									var decrypted = CryptoJS.AES.decrypt(data['text'],passphrase).toString(CryptoJS.enc.Utf8);
-									quill.setHTML(decrypted.replace(/\n/g, "<br />"));
+									quill.pasteHTML(decrypted.replace(/\n/g, "<br />"));
 								}
 								if (version == 1) { //decrypt using scrypt key
 									var decrypted = CryptoJS.AES.decrypt(data['text'],scryptkey).toString(CryptoJS.enc.Utf8);
-									quill.setHTML(decrypted);
+									quill.pasteHTML(decrypted);
+								}
+								if (version == 2) { //decrypt using scrypt key, quill v1.0
+									var decrypted = CryptoJS.AES.decrypt(data['text'],scryptkey).toString(CryptoJS.enc.Utf8);
+									quill.setContents(JSON.parse(decrypted));
+									quill.focus();
 								}
 							}
 							$('#button').html('loaded');
 							$('#notepad').css('color','#000000');
-							quill.editor.enable();
+							quill.enable(true);
 						},
 						error: function (data) {       
 							$('#button').html('error');
 							$('#button').css('color','#FF0000');
-							quill.setHTML("Error loading notepad. Please try again.");
+							quill.setText("Error loading notepad. Please try again.");
 						}
 					});
 				},
@@ -72,42 +78,80 @@
 		}
 
 		function saveText() {
-			var rawtext = quill.getHTML();
-			rawtext = rawtext.substring(0,32768);
-			var encrypted = CryptoJS.AES.encrypt(rawtext, scryptkey);
-			encrypted = encrypted.toString();
-			$('#button').html('saving');
-			$.ajax({
-				url: 'savetext.php',
-				type: 'post',
-				data: {'hash': hash, 'text': encrypted, 'version': 1},
-				success: function(data) {
-					$('#button').html('saved');
+			var contents = quill.getContents();
+			var rawtext = JSON.stringify(contents);
+			var length = quill.getLength();
 
-				},
-				error: function () {       
-					$('#button').html('error');
-					('#button').css('color','#FF0000');
-				}
-			});	
+			if (length > 32768) {
+				alert('Your notepad exceeds the maximum size.\nPlease reduce the size of your notepad and try again.')
+			}
+			else {
+				var encrypted = CryptoJS.AES.encrypt(rawtext, scryptkey);
+				encrypted = encrypted.toString();
+
+				$('#button').html('saving');
+				$.ajax({
+					url: 'savetext.php',
+					type: 'post',
+					data: {'hash': hash, 'text': encrypted, 'version': 2},
+					success: function(data) {
+						$('#button').html('saved');
+
+					},
+					error: function () {       
+						$('#button').html('error');
+						$('#button').css('color','#FF0000');
+					}
+				});	
+			}
 		}
+
+		function imageHandler() {
+			var range = this.quill.getSelection();
+			var value = prompt('Enter image URL:');
+			this.quill.insertEmbed(range.index, 'image', value);
+		}
+
+		function videoHandler() {
+			var range = this.quill.getSelection();
+			var value = prompt('Enter video URL:');
+			this.quill.insertEmbed(range.index, 'video', value);
+		}
+
+		var toolbarOptions = [
+			[{ 'font': [] }, { 'size': ['small', false, 'large', 'huge'] }],
+			['bold', 'italic', 'underline', 'strike', { 'align': [] }],        // toggled buttons
+			[{ 'color': [] }, { 'background': [] }],
+			[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+			[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+			['link', 'image', 'code-block'],
+		];
 
 		var quill = new Quill('#notepad', {
 			modules: {
-			    'link-tooltip': true,
-			    'image-tooltip': true,
-			},
-			styles: {
-				'.ql-container': {
-					'font-size': "16px"
-			    }
-			},
-			theme: 'snow'
+				syntax: true,
+		    	toolbar: { 
+		    		container: toolbarOptions,
+		    		handlers: {
+		    			image: imageHandler,
+		    			video: videoHandler 
+		    			/*
+		    			'link': function(value) {
+					    	if (value) {
+					    		var href = prompt('Enter link URL');
+					        	this.quill.format('link', href);
+					      	} else {
+					        	this.quill.format('link', false);
+					      	}
+					    }
+					    */
+		    		}
+		    	}
+		    },
+		    theme: 'snow'
 		});
 
-  		quill.addModule('toolbar', { container: '#toolbar' });
-
-  		quill.editor.disable();
+		quill.enable(false);
 
 		$('.hide').click(function(){
 			if ($('#passphrase').attr('type') == 'text') {
@@ -124,6 +168,8 @@
 		});
 
 		$('#random').click(function(){
+			$('#home').hide();
+			$('#notepad').show();
 			var pk = secureRandom(32);
 	        var seed = Crypto.util.bytesToHex(pk.slice(0,16));
 	        //nb! electrum doesn't handle trailing zeros very well
@@ -132,7 +178,7 @@
 	        $('#button').html('load');
 	        $('#button').css('color','#000000');
 	        $('#notepad').css('color','#AAAAAA');
-	        quill.setHTML('click load');
+	        quill.setText('click load');
 		});
 
 		$('#passphrase').keypress(function(e) {
@@ -156,16 +202,20 @@
 			}
 			if (passphrase == "") {
 				$('#button').css('color','#AAAAAA');
+				$('#home').show();
+				$('#notepad').hide();
 			}
 			else {
 				$('#button').css('color','#000000');
+				$('#home').hide();
+				$('#notepad').show();
 			}
-			quill.setHTML('hit enter to load');
+			quill.setText('hit enter to load');
 			$('#notepad').css('color','#AAAAAA');
-			quill.editor.disable();
+			quill.enable(false);
 		});
-
-		$('#notepad').keyup(function(){
+		
+		$('.ql-editor').keyup(function(){
 			var label = $('#button').html();
 			if (label == 'loaded' || label == 'saved' || label == 'error') {
 				$('#button').html('save');
@@ -173,15 +223,7 @@
 			}
 		});
 
-		$('.ql-size, .ql-format-button').click(function(){
-			var label = $('#button').html();
-			if (label == 'loaded' || label == 'saved' || label == 'error') {
-				$('#button').html('save');
-				$('#button').css('color','#000000');
-			}
-		});
-
-		$('.ql-font, .ql-size, .ql-color, .ql-background, .ql-align').change(function(){
+		$('.ql-formats').click(function(){
 			var label = $('#button').html();
 			if (label == 'loaded' || label == 'saved' || label == 'error') {
 				$('#button').html('save');
