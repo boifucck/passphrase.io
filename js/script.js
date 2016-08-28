@@ -64,7 +64,7 @@
 								}
 							}
 							$('#button').html('loaded');
-							$('#notepad').css('color','#000000');
+							$('#editor').css('color','#000000');
 							quill.enable(true);
 						},
 						error: function (data) {       
@@ -106,6 +106,20 @@
 			}
 		}
 
+		var quill = new Quill('#editor', {
+			modules: {
+				syntax: true,
+		    	toolbar: {
+		    		container: '#toolbar',
+		    		handlers: {
+		    			image: imageHandler,
+		    			video: videoHandler
+		    		}
+		    	}
+		    },
+		    theme: 'snow'
+		});
+
 		function imageHandler() {
 			var range = this.quill.getSelection();
 			var value = prompt('Enter image URL:');
@@ -117,39 +131,6 @@
 			var value = prompt('Enter video URL:');
 			this.quill.insertEmbed(range.index, 'video', value);
 		}
-
-		var toolbarOptions = [
-			[{ 'font': [] }, { 'size': ['small', false, 'large', 'huge'] }],
-			['bold', 'italic', 'underline', 'strike', { 'align': [] }],        // toggled buttons
-			[{ 'color': [] }, { 'background': [] }],
-			[{ 'list': 'ordered'}, { 'list': 'bullet' }],
-			[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-			['link', 'image', 'code-block'],
-		];
-
-		var quill = new Quill('#notepad', {
-			modules: {
-				syntax: true,
-		    	toolbar: { 
-		    		container: toolbarOptions,
-		    		handlers: {
-		    			image: imageHandler,
-		    			video: videoHandler 
-		    			/*
-		    			'link': function(value) {
-					    	if (value) {
-					    		var href = prompt('Enter link URL');
-					        	this.quill.format('link', href);
-					      	} else {
-					        	this.quill.format('link', false);
-					      	}
-					    }
-					    */
-		    		}
-		    	}
-		    },
-		    theme: 'snow'
-		});
 
 		quill.enable(false);
 
@@ -169,7 +150,7 @@
 
 		$('#random').click(function(){
 			$('#home').hide();
-			$('#notepad').show();
+			$('#editor').show();
 			var pk = secureRandom(32);
 	        var seed = Crypto.util.bytesToHex(pk.slice(0,16));
 	        //nb! electrum doesn't handle trailing zeros very well
@@ -177,7 +158,7 @@
 	        $('#passphrase').val(mn_encode(seed));
 	        $('#button').html('load');
 	        $('#button').css('color','#000000');
-	        $('#notepad').css('color','#AAAAAA');
+	        $('#editor').css('color','#AAAAAA');
 	        quill.setText('click load');
 		});
 
@@ -203,19 +184,19 @@
 			if (passphrase == "") {
 				$('#button').css('color','#AAAAAA');
 				$('#home').show();
-				$('#notepad').hide();
+				$('#editor').hide();
 			}
 			else {
 				$('#button').css('color','#000000');
 				$('#home').hide();
-				$('#notepad').show();
+				$('#editor').show();
 			}
 			quill.setText('hit enter to load');
-			$('#notepad').css('color','#AAAAAA');
+			$('#editor').css('color','#AAAAAA');
 			quill.enable(false);
 		});
 		
-		$('.ql-editor').keyup(function(){
+		$('#editor').keyup(function(){
 			var label = $('#button').html();
 			if (label == 'loaded' || label == 'saved' || label == 'error') {
 				$('#button').html('save');
