@@ -213,7 +213,7 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 	            },
 	            function(result) {
 	            	quill.setText('generating your secret key: 100%');
-	            	$('#progressbar').width('0');
+	            	$('#progressbar').width('100%');
 	            	scryptkey = result;
 		   			hash = CryptoJS.SHA256(result);
 					hash = hash.toString();
@@ -246,11 +246,13 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 							$('#notepad').css('color','#000000');
 							quill.enable(true);
 							quill.focus();
+							$('#progressbar').width('0%');
 						},
 						error: function (data) {       
 							$('#button').html('error');
 							$('#button').css('color','#FF0000');
 							quill.setText("Error loading notepad. Please try again.");
+							$('#progressbar').width('0%');
 						}
 					});
 				},
