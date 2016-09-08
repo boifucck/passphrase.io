@@ -244,7 +244,6 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 							}
 							$('#button').html('loaded');
 							$('#notepad').css('color','#000000');
-							quill.enable(true);
 							quill.focus();
 							$('#progressbar').width('0%');
 						},
@@ -317,23 +316,11 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 		    		handlers: {
 		    			image: imageHandler,
 		    			video: videoHandler 
-		    			/*
-		    			'link': function(value) {
-					    	if (value) {
-					    		var href = prompt('Enter link URL');
-					        	this.quill.format('link', href);
-					      	} else {
-					        	this.quill.format('link', false);
-					      	}
-					    }
-					    */
 		    		}
 		    	}
 		    },
 		    theme: 'snow'
 		});
-
-		quill.enable(false);
 
 		$('.hide').click(function(){
 			if ($('#passphrase').attr('type') == 'text') {
@@ -394,7 +381,6 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 			}
 			quill.setText('hit enter to load');
 			$('#notepad').css('color','#AAAAAA');
-			quill.enable(false);
 		});
 		
 		$('.ql-editor').keyup(function(){
