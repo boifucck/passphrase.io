@@ -2,7 +2,7 @@
 <widget id="io.passphrase" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>passphrase.io</name>
   <description>
-    Zero Knowledge Privacy Online Notepad
+    zero knowledge privacy online notepad
   </description>
   <author email="routman@protonmail.com" href="https://passphrase.io">
     Daniel Routman
