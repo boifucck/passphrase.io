@@ -219,7 +219,7 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 					hash = hash.toString();
 					hash = pad(hash, 64);
 					$.ajax({
-						url: 'gettext.php',
+						url: 'https://passphrase.io/gettext.php',
 						type: 'post',
 						data: {'hash': hash},
 						dataType: 'json',
@@ -272,7 +272,7 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 
 				$('#button').html('saving');
 				$.ajax({
-					url: 'savetext.php',
+					url: 'https://passphrase.io/savetext.php',
 					type: 'post',
 					data: {'hash': hash, 'text': encrypted, 'version': 2},
 					success: function(data) {
