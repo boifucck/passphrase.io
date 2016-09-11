@@ -11,6 +11,7 @@ Licensed under the MIT license
 	<meta name="description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
 	<meta name="viewport" content="width=device-width, user-scalable=no"/>
 	<meta charset="UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:url" content="http://passphrase.io">
@@ -31,20 +32,18 @@ Licensed under the MIT license
 </head>
 <body>
 	<div id="header">
-		<div id="header-inner">
-			<div id="title"><a href="https://passphrase.io">passphrase.io</a></div>
-			<div id="random" class="menu">random</div>
-			<div id="hide-normal" class="menu hide">hide passphrase</div>
-			<div id="hide-mobile" class="menu hide">hide</div>
-		</div>
+		<div id="title"><a href="https://passphrase.io">passphrase.io</a></div>
+		<div id="random" class="menu">random</div>
+		<div id="hide-normal" class="menu hide">hide passphrase</div>
+		<div id="hide-mobile" class="menu hide">hide</div>
 	</div>	
 	<div id="main">
 		<div id="main-inner">
 			<div id="passphrase-container">
 				<div id="progressbar"></div>
-				<input id="passphrase" class="textarea" type="text" placeholder="enter a passphrase" autocapitalize="none" autocomplete="off">
+				<input id="passphrase" type="text" placeholder="enter a passphrase" autocapitalize="none" autocomplete="off">
 			</div>
-			<div id="button" class="textarea">load</div>
+			<div id="button">load</div>
 
 			<div id="notepad-container">
 				<div id="notepad"></div>
