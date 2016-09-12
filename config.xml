@@ -25,5 +25,4 @@
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
   </platform>
-  <plugin name="com.telerik.plugins.wkwebview" spec="0.2.5" source="pgb" />
 </widget>
