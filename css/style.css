@@ -220,6 +220,10 @@ body {
 	margin-left: 58px;
 }
 
+#android {
+	margin: 16px 0;
+}
+
 #hide-mobile {
 	display: none;
 }
