@@ -220,6 +220,22 @@ body {
 	margin-left: 58px;
 }
 
+#details {
+	width: 35%;
+	float: left;
+}
+
+#encryption {
+	width: 63%;
+	float: right;
+	margin-top: 16px;
+}
+
+#credits {
+	clear: both;
+	padding-top: 16px;
+}
+
 #android {
 	margin: 16px 0;
 }
@@ -232,15 +248,14 @@ body {
     #main-inner {width: auto;}
     #notepad-container {width: 100%;}
     #header {width: 100%;}
-    #footer-container {width: 100%;}
 }
 
-@media screen and (max-width: 632px) {
-    #notepad-subsitle {font-size: 14px;}
+@media screen and (max-width: 800px) {
+    #details {width: 100%;}
+    #encryption {width: 100%;}
 }
 
 @media screen and (max-width: 371px) {
     #hide-normal {display: none;}
     #hide-mobile {display: block;}
-    #notepad-subsitle {font-size: 12px;}
 }
