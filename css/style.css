@@ -20,7 +20,7 @@ Licensed under the MIT license
 html {
 	height: 100%;
 	width: 100%;
-	background: #FAFAFA;
+	background: #2F2F2F;
 }
 body {
 	margin: 0;
@@ -238,6 +238,7 @@ body {
 
 #android {
 	margin: 16px 0;
+	display: none;
 }
 
 #hide-mobile {
