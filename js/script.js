@@ -362,8 +362,8 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 		    }
 		});
 
-		$('#passphrase').keyup(function(){
-			var passphrase = $('#passphrase').val();
+		$('#passphrase').on('input', function () {
+		  var passphrase = $('#passphrase').val();
 			passphrase = passphrase.toString();
 			var label = $('#button').html();
 			if (label != "loading") {
@@ -406,6 +406,8 @@ function scrypt(a,b,c,d,e,f,g,h,i){"use strict";function k(a){function l(a){for(
 			label = label.toString();
 			if (label == "load" && passphrase != "") {
 				getText();
+				$('#home').hide();
+				$('#notepad').show();
 			}
 			if (label == "save") {
 				saveText();
