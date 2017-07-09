@@ -1,5 +1,6 @@
-/* 
-Copyright (c) 2016 Daniel Routman - passphrase.io
+/*
+Copyright (c) 2016 - 2017 Daniel Routman
+passphrase.io v7.0.3
 Licensed under the MIT license
 */
 
@@ -19,244 +20,309 @@ Licensed under the MIT license
 
 html {
 	height: 100%;
-	width: 100%;
-	background: #2F2F2F;
-}
-body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	width: 100%;
 }
 
-#header {
+body {
 	font-family: 'Maven Pro', sans-serif;
-	height: 40px;
-	width: 1024px;
-	margin: 0 auto;
+	font-size: 16px;
+	margin: 0;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-content: flex-start;
+}
+
+#top-row {
+	display: flex;
+	min-height: 48px;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+#bottom-row {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+}
+
+/*HEADER***************************************************************/
+#header {
 	background: #4B9EFF;
+	min-height: 48px;
+	width: 300px;
 }
 
 #title {
-	line-height: 40px;
-	font-size: 20px;
-	color: white;
 	float: left;
-	margin-left: 8px;
-}
-
-#title a {
-	text-decoration: none;
-	color: white;
-}
-
-#title a:visited {
-	color: white;
-}
-
-.menu {
-	line-height: 40px;
-	font-size: 14px;
-	float: right;
+	color: #FFFFFF;
+	font-size: 18px;
+	line-height: 48px;
+	padding-left: 8px;
 	cursor: pointer;
-	color: rgba(255, 255, 255, 0.7);
-	margin: 0 8px;
 }
 
-.menu:hover {
-	color: rgba(0, 255, 255, 1);
-}
-
-#main {
-	position: absolute;
-	top: 40px;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-
-#main-inner {
-	width: 1024px;
-	margin: 0 auto;
-	height: 100%;
-	background: #FDFDFD;
-}
-
-#passphrase-container {
-	position: relative;
-	z-index: 99;
-	float: left;
-	margin: 0;
-	width: calc(100% - 88px);
-}
-
-#progressbar {
-	position: absolute;
-	z-index: 99;
+#button {
+	float: right;
+	padding-right: 16px;
 	height: 48px;
-	width: 0;
-	background: #4B9EFF;
-	opacity: 0.8;
+	line-height: 48px;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.50);
+    cursor: pointer;
+}
+
+#spinner {
+	display: inline-block;
+    border: 2px solid rgba(0,0,0,0);
+    border-top: 2px solid rgba(255, 255, 255, 0.75);
+    border-radius: 50%;
+    width: 11px;
+    height: 11px;
+    margin-left: 8px;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#checkmark{
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    margin-left: 15px;
+
+    border: solid rgba(0, 255, 128, 1);
+    border-width: 0 2px 2px 0;
+
+    transform: rotate(45deg);
+}
+
+#backarrow{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    margin-left: 4px;
+
+    border: solid rgba(0, 255, 255, 1);
+    border-width: 0 0 2px 2px;
+
+    transform: rotate(45deg);
+}
+/*PASSPHRASE***********************************************************/
+#phrase {
+	position: relative;
+	background: #FFFFFF;
+	height: 48px;
+	flex-grow: 1;
 }
 
 #passphrase {
 	float: left;
 	width: 100%;
 	height: 48px;
-	padding: 4px 8px;
+	margin: 0;
+	padding: 4px 40px 4px 15px;
 	font-family: 'Maven Pro', sans-serif;
 	font-size: 16px;
-	border: solid #4B9EFF;
-	border-width: 0 1px 1px 1px;
 	border-radius: 0;
+    border: none;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
+    overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
 }
 
-#button {
-	float: right;
-	height: 48px;
-	width: 88px;
-	padding: 0;
-	margin: 0;
-	line-height: 48px;
-    text-align: center;
-    color: #AAAAAA;
-    background: #FFFFFF;
-    cursor: pointer;
-    font-family: 'Maven Pro', sans-serif;
-	font-size: 16px;
-	border: solid #4B9EFF;
-	border-width: 0 1px 1px 0;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
-}
-
-#notepad-container {
-	width: 1024px;
+#progressbar {
 	position: absolute;
-	top: 48px;
-	bottom: 0;
+	z-index: 100;
+	left: 0;
+	right: 120px;
+	height: 48px;
+	width: 0;
+	background: #4B9EFF;
+	opacity: 0.8;
+}
+
+#hide {
+	position: absolute;
+	right: 0;
+}
+
+/*NOTEPAD**************************************************************/
+#notepad-container {
+	position: relative;
+	flex-grow: 1;
 	display: flex;
     flex-direction: column;
 }
 
 .ql-toolbar.ql-snow {
-	border: solid #4B9EFF;
-	border-width: 0 1px 1px 1px;
-	background: #FAFAFA;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+	position: relative;
+	padding: 3px 8px;
+    border: none;
+	background: #E0E0E0
+    ;
+}
+
+.ql-container {
+	font-size: 16px;
+	overflow-y: auto;
 }
 
 #notepad {
-	display: none;
-	height: auto;
 	flex-grow: 1;
-	position: relative;
-    border: solid #4B9EFF;
-	border-width: 0 1px 1px 1px;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+	display: flex;
+	flex-direction: column;
+	border-style: none;
+	overflow: visible;
+    background: #FFFFFF;
 }
 
 .ql-editor {
-	position: absolute;
-	width: 100%;
+	flex-grow: 1;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
-/*FONT SIZING*****************/
-.ql-container {
-  font-size: 16px; /*default: 13px*/
+/*NOTES*****************************************************************/
+#notes {
+	min-width: 300px;
+    max-width: 300px;
+	background: #464646;
+    overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
-.ql-editor .ql-size-small {
-  font-size: 12px; /*default: 10px*/
-}
-.ql-editor .ql-size-large {
-  font-size: 24px; /*default: 18px*/
-}
-.ql-editor .ql-size-huge {
-  font-size: 36px; /*default: 32px*/
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
 }
 
+#list {
+    color: white;
+}
 
-#home {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	overflow: auto;
-	padding: 12px 15px;
-	background: #FDFDFD;
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 16px;
-	border: solid #4B9EFF;
-	border-width: 0 1px 1px 1px;
+#list p {
+	padding: 8px;
+    margin: 0;
+    color: #DDDDDD;
+}
+
+.list-item {
+	height: 60px;
+	line-height: 60px;
+	margin: 0 8px;
+	cursor: pointer;
+	overflow: hidden;
+	border: solid #8ec2ff;
+	border-width: 0 0 1px 0;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
-#notepad-logo {
-	float: left;
+.list-item-active {
+	color: #4B9EFF;
 }
 
-#notepad-title {
-	font-family: 'Maven Pro', sans-serif;
-	font-size: 28px;
-	line-height: 28px;
-	margin-left: 58px;
-}
-
-#notepad-subsitle {
-	font-family: 'Maven Pro', sans-serif;
-	font-size: 18px;
-	line-height: 18px;
-	margin-left: 58px;
-}
-
-#details {
-	width: 35%;
-	float: left;
-}
-
-#encryption {
-	width: 63%;
+.delete {
 	float: right;
-	margin-top: 16px;
+	padding-right: 8px;
+	line-height: 60px;
+	font-size: 16px;
+	color: #4B9EFF;
+	cursor: pointer;
 }
 
-#credits {
-	clear: both;
-	padding-top: 16px;
-}
-
-#android {
-	margin: 16px 0;
+#add {
 	display: none;
+	margin: 16px auto;
+	font-size: 36px;
+	line-height: 36px;
+	color: #FFFFFF;
+	background: #4B9EFF;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+#add span {
+	position: relative;
+	top: 0px;
+	left: 10px;
 }
 
-#hide-mobile {
+.disabled {
+	background: #737373 !important;
+    color: #BCBCBC !important;
+}
+
+/*CONFIRM**************************************************************/
+#confirm {
 	display: none;
+	position: fixed;
+	z-index: 200;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	color: #FFFFFF;
+	background: rgba(0, 0, 0, 0.80);
+	text-align: center;
 }
 
-@media screen and (max-width: 1024px) {
-    #main-inner {width: auto;}
-    #notepad-container {width: 100%;}
-    #header {width: 100%;}
+#confirm-inner {
+	display: table-cell;
+	vertical-align: middle;
 }
 
+.confirm-button {
+	display: inline-block;
+	border: 2px solid #4B9EFF;
+	border-radius: 8px;
+	width: 80px;
+	height: 40px;
+	line-height: 40px;
+	margin: 8px;
+}
+
+/*RESPONSIVENESS*******************************************************/
+@media screen and (max-width: 1000px) {
+    #phrase, #notepad-container, #home {
+		width: 70%;
+    }
+    #header, #notes {
+    	width: 30%;
+    	min-width: 30%;
+    }
+}
 @media screen and (max-width: 800px) {
-    #details {width: 100%;}
-    #encryption {width: 100%;}
+    #header, #phrase, #notepad-container {
+    	width: 100%;
+    }
+    #notes {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #notepad-container {
+        display: none;
+    	border-width: 0;
+    }
+    #notes {
+    	border-width: 0;
+    }
+    #top-row {
+		min-height: 96px;
+	}
+    #passphrase {
+        padding-left: 8px;
+    }
 }
-
-@media screen and (max-width: 371px) {
-    #hide-normal {display: none;}
-    #hide-mobile {display: block;}
+@media screen and (max-width: 400px) {
+    #addr {
+    	font-size: 14px;
+    }
 }
