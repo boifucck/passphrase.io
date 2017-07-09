@@ -1,5 +1,6 @@
 <!--
-Copyright (c) 2016 Daniel Routman - passphrase.io
+Copyright (c) 2016 - 2017 Daniel Routman
+passphrase.io v7.0.3
 Licensed under the MIT license
 -->
 
@@ -8,6 +9,7 @@ Licensed under the MIT license
 <head>
 	<title>passphrase.io - private online notepad</title>
 	<link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+	<link rel="prefetch" href="images/show.png">
 	<meta name="description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
 	<meta name="viewport" content="width=device-width, user-scalable=no"/>
 	<meta charset="UTF-8">
@@ -24,74 +26,41 @@ Licensed under the MIT license
 	<meta property="og:url" content="https://passphrase.io"/>
 	<meta property="og:description" content="Enter a passphrase to store and retrieve your notepad from any web browser. All data is encrypted in your browser, so we have no way to view the contents of your notepad on our server."/>
 	<meta property="og:image" content="http://passphrase.io/images/facebook.png"/>
-	
+
 	<link rel='stylesheet' href='css/monokai-sublime.min.css'/>
 	<link rel='stylesheet' href='css/quill.snow.css'/>
 	<link rel='stylesheet' href='css/style.css'/>
 
 </head>
 <body>
-	<div id="header">
-		<div id="title"><a href="https://passphrase.io">passphrase.io</a></div>
-		<div id="random" class="menu">random</div>
-		<div id="hide-normal" class="menu hide">hide passphrase</div>
-		<div id="hide-mobile" class="menu hide">hide</div>
-	</div>	
-	<div id="main">
-		<div id="main-inner">
-			<div id="passphrase-container">
+	<div id="top-row">
+		<div id="header">
+			<div id="title">passphrase.io</div>
+			<div id="button">load</div>
+		</div>
+		<div id="phrase">
 				<div id="progressbar"></div>
 				<input id="passphrase" type="text" placeholder="enter a passphrase" autocapitalize="none" autocomplete="off">
+				<div id="hide"><img id="hide-icon" src="images/hide.png" style="max-width: 48px;"></div>
+		</div>
+	</div>
+	<div id="bottom-row">
+		<div id="notes">
+			<div id="list">
 			</div>
-			<div id="button">load</div>
-
-			<div id="notepad-container">
-				<div id="notepad"></div>
-			
-				<div id="home">
-					<img id="notepad-logo" src="images/logo.png" style="max-width: 50px;">
-					<div id="notepad-title">passphrase.io</div>
-					<div id="notepad-subsitle">private online notepad</div>
-					<br>
-					<div>Enter any passphrase above to get started.  No account required.</div>
-					<ul>
-						<li><b>Private</b> - all of your data is encrypted</li>
-						<li><b>Safe</b> - no cookies, tracking, or ads</li>
-						<li><b>Simple</b> - all you need is your passphrase</li>
-						<li><b>Free</b> - and open source</li>
-						<li><b>Fun</b> - enter common words/phrases to see notes left behind by others!</li>
-					</ul>
-					<div>For high security, use a long, complex passphrase that is difficult to guess. Short passphrases lead to high visibility, and text can be overwritten by anyone who stumbles upon it. Please keep in mind that your passphrase is case sensitive.</div>
-					<br>
-					<div>Your notepad is encrypted in your browser before it is sent to our server for storage. We have no way of knowing your passphrase or seeing the contents of your notepad. If you forget your passphrase, there is no recovery process.</div>
-
-					<a href='https://play.google.com/store/apps/details?id=io.passphrase' target="_blank"><img id="android" alt='Get it on Google Play' src='images/android.png' style="max-width: 140px;"/></a>
-					<br>
-
-					<div id="details">
-						<b>Technical Details:</b><br>
-						<div>Using client-side JavaScript, your passphrase is run through the memory-intensive <a href="https://en.wikipedia.org/wiki/Scrypt" target="_blank">scrypt</a> key derivation function (N=2<sup>18</sup>, r=8, p=1, dkLen=32) to generate a secret key.</div>
-						<br>
-						<div>Your secret key is used to encrypt your notepad with <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES256</a> encryption. The ciphertext (encrypted notepad) is sent along with a <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA256</a> hash of your secret key to the server for storage.</div>
-						<br>
-						<div>When you retrieve your notepad, your SHA256 hash is sent to the server, and the ciphertext is returned.  The ciphertext is decrypted using your secret key, revealing your notepad.</div>
-						<br>
-						<div>Passphrase.io was inspired by the concept of the Bitcoin <a href="https://brainwallet.io" target="_blank">briainwallet</a>, which allows you to store money in your brain by memorizing a passphrase.</div>
-					</div>
-
-					<div id="encryption"><img src="images/encryption.png" style="width: 360px; max-width: 100%;"></div>
-
-					<div id="credits">
-						<div><b>Created By:</b></div>
-						<div>Daniel Routman</div>
-						<div>routman@protonmail.com</div>
-						<div>16pxFP2C4mYBrG7mufnXZVWCLhNq7Vmdjo</div>
-						<br>
-						<a href="https://passphrase.io/terms">terms of use</a>
-						<div>passphrase.io © 2016</div>
-					</div>
-				</div>
-			</div>
+			<div id="add" class="disabled" style="display: block;"><span>+</span></div>
+		</div>
+		<div id="notepad-container">
+			<div id="notepad"></div>
+		</div>
+	</div>
+	<div id="confirm">
+		<div id="confirm-inner">
+			<p>are you sure you want to delete</p>
+			<div id="confirm-notepad"></div>
+			<div id="confirm-yes" class="confirm-button">yes</div>
+			<div id="confirm-no" class="confirm-button">cancel</div>
+			<p>this can't be undone</p>
 		</div>
 	</div>
 </body>
